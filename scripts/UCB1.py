@@ -14,12 +14,12 @@ def gamble(success_rate : float) -> int:
     else:
         return 0
     
-def calculate_ucb1(trial : int, success : int , allTrial : int) -> float:
+def calculate_ucb1(trial : int, success : int , all_trial : int) -> float:
     if(trial == 0):
         return sys.float_info.max
 
     success_rate : float = success / trial
-    bias : float = math.sqrt(2.0 * math.log(allTrial) / trial)
+    bias : float = math.sqrt(2.0 * math.log(all_trial) / trial)
 
     return success_rate + bias
 
@@ -35,19 +35,19 @@ def start_ucb1():
     for trial in range(TRIAL_NUMBER):
         
         # Calculate UCB1 of each slot
-        for slotIndex in range(SLOT_NUMBER):
-            ucb1[slotIndex] = calculate_ucb1(trial_count[slotIndex], successful_count[slotIndex], sum(trial_count))
+        for slot_index in range(SLOT_NUMBER):
+            ucb1[slot_index] = calculate_ucb1(trial_count[slot_index], successful_count[slot_index], sum(trial_count))
         
         # Select slot and Gamble with selected slot
-        selectedSlotIndex : int = select_slot(ucb1)
-        reward : int = gamble(success_rate_only_god_knows[selectedSlotIndex])
+        selected_slot_index : int = select_slot(ucb1)
+        reward : int = gamble(success_rate_only_god_knows[selected_slot_index])
         total_reward += reward
         
         # Count Result
-        trial_count[selectedSlotIndex] += 1
-        successful_count[selectedSlotIndex] += reward
+        trial_count[selected_slot_index] += 1
+        successful_count[selected_slot_index] += reward
             
-        print(f"Trial : {str(trial)}  | Selected :  {str(selectedSlotIndex)} | IsSuccess :  {str(reward)} | TotalReward :  {str(total_reward)}  | UCB1 : {", ".join(map(str, ucb1))}") 
+        print(f"Trial : {str(trial)}  | Selected :  {str(selected_slot_index)} | IsSuccess :  {str(reward)} | TotalReward :  {str(total_reward)}  | UCB1 : {", ".join(map(str, ucb1))}") 
         
     print()
     print("------------------------ Summary ------------------------")
