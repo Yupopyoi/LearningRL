@@ -35,6 +35,7 @@ class QLearning:
         for episode in range(episodes):
             state = self.maze.get_start_position()
             total_reward = 0
+            step_count = 0
 
             while not self.maze.is_goal(state):
                 # Choose Action based on ε-greedy
@@ -59,8 +60,9 @@ class QLearning:
                 # Update state and reward
                 state = next_state
                 total_reward += reward
+                step_count += 1
 
-            print(f"Episode {episode + 1}: Total Reward = {total_reward}")
+            print(f"Episode {episode + 1} : Step Count = {step_count} | Total Reward = {total_reward}")
             
     def print_policy(self):
         """Output the direction of the maximum Q value in each state"""
